@@ -1,16 +1,16 @@
 import random
 
-def RSA_verschlüsseln(p,q, char):
+def RSA_verschlüsseln(p,q):
     n = p * q
     print("n: ", n)
     m = (p - 1) * (q - 1)
     print("m :", m)
-    #e = teilerfremd(m)
-    e=65537
+    e=13
     print("e: ", e)
     d=inverse(e,m)
+    d +=m
     print("d: ", d)
-    return pow(char, e, n)
+    return n,m,e,d
 
 def miller_rabin(n, k):
     if n == 2:
@@ -34,9 +34,16 @@ def miller_rabin(n, k):
             return False
     return True
 
-def teilerfremd(a):
-    for i in range(3,a):
-        if a%i==1: return i
+def verschlusseln(wort):
+    buchstaben_array = []
+    for buchstabe in wort:
+        buchstaben_array.append(buchstabe)
+
+    ergebnis = 0
+    for j in range(len(buchstaben_array)):
+        asciNumber = ord("" + buchstaben_array[j])
+        ergebnis = ergebnis + ((asciNumber - 32) * 95 ** j)
+    return ergebnis
 
 def inverse(a, m):
     r = [a, m]
@@ -52,6 +59,7 @@ def inverse(a, m):
         x = x + [x[k] - q[k + 1] * x[k + 1]]
         k += 1
     return x[k + 1]
+
 def get_prim():
     p = 0
     q = 0
@@ -69,11 +77,11 @@ def get_prim():
     return p, q
 
 text = str(input("Zu verschlüsselnen Text eingeben: "))
-#p, q = get_prim()
-p=11
-q=13
-cyperArray = []
-for char in text:
-    cyperArray.append(RSA_verschlüsseln(p,q,ord(char)))
+p, q = get_prim()
+n,m,e,d = RSA_verschlüsseln(p,q)
+print(f"öffentlicher Schlüssel({n},{e})")
+print(f"privater Schlüssel({n},{d})")
+verschlusselteZahl = verschlusseln(text)
+rsa_verschluesselt = pow(verschlusselteZahl,e, n)
 
-print("Verschlüsselter Text:", cyperArray)
+print("Verschlüsselter Text:", rsa_verschluesselt)
