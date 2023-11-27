@@ -5,7 +5,7 @@ def RSA_verschlüsseln(p,q):
     print("n: ", n)
     m = (p - 1) * (q - 1) # phi(m) wird berechnet. Euler-Fermat Satz
     print("m :", m)
-    e=17 # Der öffentliche key e wird festgelegt
+    e=17 # e wird festgelegt
     print("e: ", e)
     d = pow(e,-1,m) # die inverse wird berechnet, um d (Privaten Key) zu bestimmen
     d +=m # verhindert, dass d negativ wird
@@ -37,7 +37,7 @@ def miller_rabin(n, k):
 def verschlusseln(wort):
     buchstaben_array = []
     for buchstabe in wort:
-        buchstaben_array.append(buchstabe) # Wort wird in aufgeteilt und in das Array gesteckt
+        buchstaben_array.append(buchstabe) # Wort wird in buchstaben aufgeteilt und in das Array gesteckt
 
     ergebnis = 0
     for j in range(len(buchstaben_array)): # For schleife geht durch das Array
@@ -48,7 +48,7 @@ def verschlusseln(wort):
 def get_prim():
     p = 0
     q = 0
-    n = pow(10, 300) + 1 # Bestimmt den Startwert
+    n = pow(10, 300) + 1 # Bestimmt den Startwert und länge der Primzahl
     while q == 0:
         prim = miller_rabin(n, 5)
         if prim:
@@ -66,7 +66,7 @@ p, q = get_prim() # Primzahlen werden bestimmt
 n,m,e,d = RSA_verschlüsseln(p,q) # Mit p und q wird das RSA-Modul, der private key, Phi(m) und n returned
 print(f"öffentlicher Schlüssel({n},{e})")
 print(f"privater Schlüssel({n},{d})")
-verschlusselteZahl = verschlusseln(text) # Wandelt den verschlüsselten Text in eine Zahl, mithilfe von der ASCII Tabelle
-rsa_verschluesselt = pow(verschlusselteZahl,e, n) # Verschlüsselt die ASCII nummer mit dem öffentlichen Key und dem RSA-Modul
+verschlusselteZahl = verschlusseln(text) # Wandelt den Text in eine Zahl
+rsa_verschluesselt = pow(verschlusselteZahl,e, n) # Verschlüsselt die ASCII nummer mit dem öffentlichen Key aus dem RSA-Modul
 
 print("Verschlüsselter Text:", rsa_verschluesselt)
