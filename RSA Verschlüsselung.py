@@ -1,14 +1,14 @@
 import random
 
 def RSA_verschlüsseln(p,q):
-    n = p * q
+    n = p * q # RSA-Modul wird berechnet
     print("n: ", n)
-    m = (p - 1) * (q - 1)
+    m = (p - 1) * (q - 1) # phi(m) wird berechnet. Euler-Fermat Satz
     print("m :", m)
-    e=17
+    e=17 # Der öffentliche key e wird festgelegt
     print("e: ", e)
-    d = pow(e,-1,m)
-    d +=m
+    d = pow(e,-1,m) # die inverse wird berechnet, um d (Privaten Key) zu bestimmen
+    d +=m # verhindert, dass d negativ wird
     print("d: ", d)
     return n,m,e,d
 
@@ -37,18 +37,18 @@ def miller_rabin(n, k):
 def verschlusseln(wort):
     buchstaben_array = []
     for buchstabe in wort:
-        buchstaben_array.append(buchstabe)
+        buchstaben_array.append(buchstabe) # Wort wird in aufgeteilt und in das Array gesteckt
 
     ergebnis = 0
-    for j in range(len(buchstaben_array)):
-        asciNumber = ord("" + buchstaben_array[j])
-        ergebnis = ergebnis + ((asciNumber) * 256 ** j)
+    for j in range(len(buchstaben_array)): # For schleife geht durch das Array
+        asciNumber = ord("" + buchstaben_array[j])  # Die ASCII Nummer wird bestimmt
+        ergebnis = ergebnis + ((asciNumber) * 256 ** j) # Die ASCII Nummer wird mit der Basis 256 berechnet
     return ergebnis
 
 def get_prim():
     p = 0
     q = 0
-    n = pow(10, 300) + 1
+    n = pow(10, 300) + 1 # Bestimmt den Startwert
     while q == 0:
         prim = miller_rabin(n, 5)
         if prim:
@@ -61,12 +61,12 @@ def get_prim():
         n += 2
     return p, q
 
-text = str(input("Zu verschlüsselnen Text eingeben: "))
-p, q = get_prim()
-n,m,e,d = RSA_verschlüsseln(p,q)
+text = str(input("Zu verschlüsselnen Text eingeben: ")) # Text zum verschlüsseln wird eingelesen
+p, q = get_prim() # Primzahlen werden bestimmt
+n,m,e,d = RSA_verschlüsseln(p,q) # Mit p und q wird das RSA-Modul, der private key, Phi(m) und n returned
 print(f"öffentlicher Schlüssel({n},{e})")
 print(f"privater Schlüssel({n},{d})")
-verschlusselteZahl = verschlusseln(text)
-rsa_verschluesselt = pow(verschlusselteZahl,e, n)
+verschlusselteZahl = verschlusseln(text) # Wandelt den verschlüsselten Text in eine Zahl, mithilfe von der ASCII Tabelle
+rsa_verschluesselt = pow(verschlusselteZahl,e, n) # Verschlüsselt die ASCII nummer mit dem öffentlichen Key und dem RSA-Modul
 
 print("Verschlüsselter Text:", rsa_verschluesselt)
