@@ -65,6 +65,15 @@ def get_prim():
         n += 2
     return p, q
 
+
+def listToString(s):
+    str1 = ""
+
+    for ele in s:
+        str1 += ele
+
+    return str1
+
 def entschlusselung(rest):
     letters = []
     while rest > 1:
@@ -79,4 +88,4 @@ print(f"öffentlicher Schlüssel({n},{e})")
 print(f"privater Schlüssel({n},{d})")
 rsa_entschluesselt = pow(verschluesselt, d, n)
 text = entschlusselung(rsa_entschluesselt)
-print("Verschlüsselter Text:", text)
+print("Verschlüsselter Text:", listToString(text))
