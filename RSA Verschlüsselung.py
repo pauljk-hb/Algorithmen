@@ -42,7 +42,7 @@ def verschlusseln(wort):
     ergebnis = 0
     for j in range(len(buchstaben_array)):
         asciNumber = ord("" + buchstaben_array[j])
-        ergebnis = ergebnis + ((asciNumber - 32) * 95 ** j)
+        ergebnis = ergebnis + ((asciNumber) * 256 ** j)
     return ergebnis
 
 def inverse(a, m):
