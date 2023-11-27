@@ -7,7 +7,7 @@ def RSA_verschlüsseln(p,q):
     print("m :", m)
     e=17
     print("e: ", e)
-    d=inverse(e,m)
+    d = pow(e,-1,m)
     d +=m
     print("d: ", d)
     return n,m,e,d
@@ -33,21 +33,6 @@ def miller_rabin(n, k):
         else:
             return False
     return True
-
-def inverse(a, m):
-    r = [a, m]
-    q = [0, a // m]
-    x = [1, 0]
-    k = 0
-    while True:
-        r = r + [r[k] % r[k + 1]]
-        if r[k + 2] == 0:
-            x = x + [x[k] - q[k + 1] * x[k + 1]]
-            break
-        q = q + [r[k + 1] // r[k + 2]]
-        x = x + [x[k] - q[k + 1] * x[k + 1]]
-        k += 1
-    return x[k + 1]
 
 def get_prim():
     p = 0
