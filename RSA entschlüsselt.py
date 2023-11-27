@@ -1,10 +1,11 @@
 import random
+
 def RSA_verschlüsseln(p,q):
     n = p * q
     print("n: ", n)
     m = (p - 1) * (q - 1)
     print("m :", m)
-    e=13
+    e=17
     print("e: ", e)
     d=inverse(e,m)
     d +=m
@@ -51,7 +52,7 @@ def inverse(a, m):
 def get_prim():
     p = 0
     q = 0
-    n = pow(10, 299) + 1
+    n = pow(10, 300) + 1
     while q == 0:
         prim = miller_rabin(n, 5)
         if prim:
@@ -67,8 +68,8 @@ def get_prim():
 def entschlusselung(rest):
     letters = []
     while rest > 1:
-        rest, remainder = divmod(rest, 95) # Gibt den Rest zurück und den Quotienten, weil round/int ungenau gerundet hat
-        letters.append(chr(remainder + 32))
+        rest, remainder = divmod(rest, 256) # Gibt den Rest zurück und den Quotienten, weil round/int ungenau gerundet hat
+        letters.append(chr(remainder))
     return letters
 
 verschluesselt = int(input("Zu Zahl eingeben: "))
