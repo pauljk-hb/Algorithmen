@@ -5,7 +5,7 @@ def RSA_verschlüsseln(p,q):
     print("n: ", n)
     m = (p - 1) * (q - 1) # phi(m) wird berechnet. Euler-Fermat Satz
     print("m :", m)
-    e=17 # Der öffentliche key e wird festgelegt
+    e=17 # e wird festgelegt
     print("e: ", e)
     d = pow(e,-1,m) # die inverse wird berechnet, um d (Privaten Key) zu bestimmen
     d +=m # verhindert, dass d negativ wird
@@ -37,7 +37,7 @@ def miller_rabin(n, k):
 def get_prim():
     p = 0
     q = 0
-    n = pow(10, 300) + 1 # Bestimmt den Startwert
+    n = pow(10, 300) + 1 # Bestimmt den Startwert und die länge der Primzahl
     while q == 0:
         prim = miller_rabin(n, 5)
         if prim:
@@ -51,7 +51,7 @@ def get_prim():
     return p, q
 
 
-def listToString(s): # Macht aus dem Array ein langen String
+def listToString(s): # Macht aus dem Array ein String
     str1 = ""
 
     for ele in s:
@@ -72,5 +72,5 @@ n,e,d = RSA_verschlüsseln(p,q) # Mit p und q wird das RSA-Modul (n), der privat
 print(f"öffentlicher Schlüssel({n},{e})")
 print(f"privater Schlüssel({n},{d})")
 rsa_entschluesselt = pow(verschluesselt, d, n) # Verschlüsselte Zahl wird mit privaten key (d) und RSA-Modul (n) entschlüsselt
-text = entschlusselung(rsa_entschluesselt) # Bestimmt die Zeichen, mithilfe der Zahl
+text = entschlusselung(rsa_entschluesselt) # Wandelt Zahl wieder in Zeichen um
 print("Verschlüsselter Text:", listToString(text))
